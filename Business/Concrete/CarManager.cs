@@ -79,5 +79,10 @@ namespace Business.Concrete
             else Console.WriteLine("No such car was found.");
             return c;
         }
+        
+         public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities.DTOs;
 
 namespace Business.Abstract
 {
@@ -13,5 +14,6 @@ namespace Business.Abstract
         List<Car> GetCarsByBrandID(int Id);
         List<Car> GetCarsByColorID(int Id);
         List<Car> GetByDailyPrice(decimal min, decimal max);
+        List<CarDetailDto> GetCarDetails();
     }
 }

@@ -33,8 +33,9 @@ namespace ConsoleUI
                 Console.WriteLine("          2. Brand Menu");
                 Console.WriteLine("          3. Color Menu");
                 Console.WriteLine("          4. View Car List By Daily Price");
-                Console.WriteLine("          5. Exit \n");
-
+                Console.WriteLine("          5. View Car Details List");
+                Console.WriteLine("          6. Exit \n");
+                
                 char key = Console.ReadLine()[0];
                 switch (key)
                 {
@@ -51,6 +52,9 @@ namespace ConsoleUI
                         ViewCarListByDailyPrice();
                         break;
                     case '5':
+                        ViewCarDetailList();
+                        break;
+                    case '6':
                         Console.WriteLine("*************** Have a nice day. Good Bye :) ***************");
                         flag = false;
                         break;
@@ -81,7 +85,17 @@ namespace ConsoleUI
             }
             _carManager.GetList(_carManager.GetByDailyPrice(priceMin, priceMax));
         }
-
+        
+        private void ViewCarDetailList()
+        {
+            int counter = 1;
+            foreach(var car in _carManager.GetCarDetails())
+            {
+                Console.WriteLine("{0}- Car Name: {1}\n    Brand Name: {2}\n    Color Name: {3}", counter, car.CarName, car.BrandName, car.ColorName);
+                counter++;
+            }
+        }
+        
         #region CarMenu
         public void CarMenu()
         {

@@ -1,4 +1,4 @@
-﻿using Business.Concrete;
+using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
@@ -35,7 +35,7 @@ namespace ConsoleUI
                 Console.WriteLine("          4. View Car List By Daily Price");
                 Console.WriteLine("          5. View Car Details List");
                 Console.WriteLine("          6. Exit \n");
-                
+
                 char key = Console.ReadLine()[0];
                 switch (key)
                 {
@@ -83,19 +83,21 @@ namespace ConsoleUI
                 }
                 else flag2 = false;
             }
-            _carManager.GetList(_carManager.GetByDailyPrice(priceMin, priceMax));
+            _carManager.GetList(_carManager.GetByDailyPrice(priceMin, priceMax).Data);
         }
-        
+
+
         private void ViewCarDetailList()
         {
             int counter = 1;
-            foreach(var car in _carManager.GetCarDetails())
+            foreach(var car in _carManager.GetCarDetails().Data)
             {
                 Console.WriteLine("{0}- Car Name: {1}\n    Brand Name: {2}\n    Color Name: {3}", counter, car.CarName, car.BrandName, car.ColorName);
                 counter++;
             }
         }
-        
+
+
         #region CarMenu
         public void CarMenu()
         {
@@ -153,6 +155,20 @@ namespace ConsoleUI
             car.BrandID = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Color ID: ");
             car.ColorID = Convert.ToInt32(Console.ReadLine());
+            var name = "";
+            bool flag3 = true;
+            while (flag3)
+            {
+                Console.WriteLine("Name: ");
+                name = Console.ReadLine();
+                if (name.Length < 2)
+                {
+                    Console.WriteLine("Please enter at least 2 characters.");
+
+                }
+                else flag3 = false;
+            }
+            car.Name = name;
             Console.WriteLine("Model Year: ");
             car.ModelYear = Convert.ToInt32(Console.ReadLine());
 
@@ -170,22 +186,8 @@ namespace ConsoleUI
                 else flag2 = false;
             }
             car.DailyPrice = price;
-
-            var description = "";
-            bool flag3 = true;
-            while (flag3)
-            {
-                Console.WriteLine("Description: ");
-                description = Console.ReadLine();
-                if (description.Length < 2)
-                {
-                    Console.WriteLine("Please enter at least 2 characters.");
-
-                }
-                else flag3 = false;
-            }
-
-            car.Description = description;
+            Console.WriteLine("Description: ");
+            car.Description = Console.ReadLine();
 
             _carManager.Add(car);
             Console.WriteLine("{0} has been registered.\n", car.ID);
@@ -199,7 +201,7 @@ namespace ConsoleUI
             {
                 Console.WriteLine("Please select the car to delete: ");
                 choice = Convert.ToInt32(Console.ReadLine());
-                var list = _carManager.GetAll();
+                var list = _carManager.GetAll().Data;
                 if (!list.Any(x => x.ID == choice))
                 {
                     Console.WriteLine("There are no cars registered with this ID.");
@@ -207,21 +209,21 @@ namespace ConsoleUI
                 }
                 else flag2 = false;
             }
-            _carManager.GetList(_carManager.GetAll());
-            _carManager.Delete(_carManager.FindByID(choice));
+            _carManager.GetList(_carManager.GetAll().Data);
+            _carManager.Delete(_carManager.FindByID(choice).Data);
             Console.WriteLine("{0} has been deleted.\n", choice);
         }
 
         private void UpdateCar()
         {
-            _carManager.GetList(_carManager.GetAll());
+            _carManager.GetList(_carManager.GetAll().Data);
             bool flag2 = true;
             int choice = 0;
             while (flag2)
             {
                 Console.WriteLine("Please select the car to delete: ");
                 choice = Convert.ToInt32(Console.ReadLine());
-                var list = _carManager.GetAll();
+                var list = _carManager.GetAll().Data;
                 if (!list.Any(x => x.ID == choice))
                 {
                     Console.WriteLine("There are no cars registered with this ID.");
@@ -229,11 +231,13 @@ namespace ConsoleUI
                 }
                 else flag2 = false;
             }
-            var c = _carManager.FindByID(choice);
+            var c = _carManager.FindByID(choice).Data;
             Console.WriteLine("Brand ID: ");
             c.BrandID = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Color ID: ");
             c.ColorID = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Name: ");
+            c.Name = Console.ReadLine();
             Console.WriteLine("Model Year: ");
             c.ModelYear = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Daily Price: ");
@@ -247,14 +251,14 @@ namespace ConsoleUI
 
         private void CarsByBrandID()
         {
-            _brandManager.GetList(_brandManager.GetAll());
+            _brandManager.GetList(_brandManager.GetAll().Data);
             bool flag2 = true;
             int choice = 0;
             while (flag2)
             {
                 Console.WriteLine("Please select the brand: ");
                 choice = Convert.ToInt32(Console.ReadLine());
-                var list = _brandManager.GetAll();
+                var list = _brandManager.GetAll().Data;
                 if (!list.Any(x => x.ID == choice))
                 {
                     Console.WriteLine("There are no brand registered with this ID.");
@@ -262,19 +266,19 @@ namespace ConsoleUI
                 }
                 else flag2 = false;
             }
-            _carManager.GetList(_carManager.GetCarsByBrandID(choice));
+            _carManager.GetList(_carManager.GetCarsByBrandID(choice).Data);
         }
 
         private void CarsByColorID()
         {
-            _colorManager.GetList(_colorManager.GetAll());
+            _colorManager.GetList(_colorManager.GetAll().Data);
             bool flag2 = true;
             int choice = 0;
             while (flag2)
             {
                 Console.WriteLine("Please select the color: ");
                 choice = Convert.ToInt32(Console.ReadLine());
-                var list = _colorManager.GetAll();
+                var list = _colorManager.GetAll().Data;
                 if (!list.Any(x => x.ID == choice))
                 {
                     Console.WriteLine("There are no color registered with this ID.");
@@ -282,12 +286,12 @@ namespace ConsoleUI
                 }
                 else flag2 = false;
             }
-            _carManager.GetList(_carManager.GetCarsByColorID(choice));
+            _carManager.GetList(_carManager.GetCarsByColorID(choice).Data);
         }
 
         private void GetCarList()
         {
-            _carManager.GetList(_carManager.GetAll());
+            _carManager.GetList(_carManager.GetAll().Data);
         } 
         #endregion
 
@@ -352,7 +356,7 @@ namespace ConsoleUI
             {
                 Console.WriteLine("Please select the brand to delete: ");
                 choice = Convert.ToInt32(Console.ReadLine());
-                var list = _brandManager.GetAll();
+                var list = _brandManager.GetAll().Data;
                 if (!list.Any(x => x.ID == choice))
                 {
                     Console.WriteLine("There are no brand registered with this ID.");
@@ -360,21 +364,21 @@ namespace ConsoleUI
                 }
                 else flag2 = false;
             }
-            _brandManager.GetList(_brandManager.GetAll());
-            _brandManager.Delete(_brandManager.FindByID(choice));
+            _brandManager.GetList(_brandManager.GetAll().Data);
+            _brandManager.Delete(_brandManager.FindByID(choice).Data);
             Console.WriteLine("{0} has been deleted.\n", choice);
         }
 
         private void UpdateBrand()
         {
-            _brandManager.GetList(_brandManager.GetAll());
+            _brandManager.GetList(_brandManager.GetAll().Data);
             bool flag2 = true;
             int choice = 0;
             while (flag2)
             {
                 Console.WriteLine("Please select the brand to delete: ");
                 choice = Convert.ToInt32(Console.ReadLine());
-                var list = _brandManager.GetAll();
+                var list = _brandManager.GetAll().Data;
                 if (!list.Any(x => x.ID == choice))
                 {
                     Console.WriteLine("There are no brand registered with this ID.");
@@ -382,7 +386,7 @@ namespace ConsoleUI
                 }
                 else flag2 = false;
             }
-            var brand = _brandManager.FindByID(choice);
+            var brand = _brandManager.FindByID(choice).Data;
 
             Console.WriteLine("Name: ");
             brand.Name = Console.ReadLine();
@@ -393,7 +397,7 @@ namespace ConsoleUI
 
         private void GetBrandList()
         {
-            _brandManager.GetList(_brandManager.GetAll());
+            _brandManager.GetList(_brandManager.GetAll().Data);
         } 
         #endregion
 
@@ -457,7 +461,7 @@ namespace ConsoleUI
             {
                 Console.WriteLine("Please select the color to delete: ");
                 choice = Convert.ToInt32(Console.ReadLine());
-                var list = _colorManager.GetAll();
+                var list = _colorManager.GetAll().Data;
                 if (!list.Any(x => x.ID == choice))
                 {
                     Console.WriteLine("There are no color registered with this ID.");
@@ -465,21 +469,21 @@ namespace ConsoleUI
                 }
                 else flag2 = false;
             }
-            _colorManager.GetList(_colorManager.GetAll());
-            _colorManager.Delete(_colorManager.FindByID(choice));
+            _colorManager.GetList(_colorManager.GetAll().Data);
+            _colorManager.Delete(_colorManager.FindByID(choice).Data);
             Console.WriteLine("{0} has been deleted.\n", choice);
         }
 
         private void UpdateColor()
         {
-            _colorManager.GetList(_colorManager.GetAll());
+            _colorManager.GetList(_colorManager.GetAll().Data);
             bool flag2 = true;
             int choice = 0;
             while (flag2)
             {
                 Console.WriteLine("Please select the color to delete: ");
                 choice = Convert.ToInt32(Console.ReadLine());
-                var list = _colorManager.GetAll();
+                var list = _colorManager.GetAll().Data;
                 if (!list.Any(x => x.ID == choice))
                 {
                     Console.WriteLine("There are no color registered with this ID.");
@@ -487,7 +491,7 @@ namespace ConsoleUI
                 }
                 else flag2 = false;
             }
-            var color = _colorManager.FindByID(choice);
+            var color = _colorManager.FindByID(choice).Data;
 
             Console.WriteLine("Name: ");
             color.Name = Console.ReadLine();
@@ -498,7 +502,7 @@ namespace ConsoleUI
 
         private void GetColorList()
         {
-            _colorManager.GetList(_colorManager.GetAll());
+            _colorManager.GetList(_colorManager.GetAll().Data);
         }  
         #endregion
     }

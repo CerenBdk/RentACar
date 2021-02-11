@@ -1,4 +1,6 @@
-﻿using Business.Abstract;
+using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -18,32 +20,35 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        public void Add(Color entity)
+        public IResult Add(Color entity)
         {
             _colorDal.Add(entity);
+            return new SuccessResult("Color" + Messages.AddSingular);
         }
 
-        public void Update(Color entity)
+        public IResult Update(Color entity)
         {
             _colorDal.Update(entity);
+            return new SuccessResult("Color" + Messages.UpdateSingular);
         }
 
-        public void Delete(Color entity)
+        public IResult Delete(Color entity)
         {
             _colorDal.Delete(entity);
+            return new SuccessResult("Color" + Messages.DeleteSingular);
         }
 
-        public Color Get(Color entity)
+        public IDataResult<Color> Get(Color entity)
         {
-            return _colorDal.Get(x => x.ID == entity.ID);
+            return new SuccessDataResult<Color>(_colorDal.Get(x => x.ID == entity.ID));
         }
 
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
         }
 
-        public void GetList(List<Color> list)
+        public IResult GetList(List<Color> list)
         {
             Console.WriteLine("\n------- Color List -------");
             int count = 1;
@@ -52,9 +57,10 @@ namespace Business.Concrete
                 Console.WriteLine("{0}- ID: {1}\n   Color Name: {2}", count, color.ID, color.Name);
                 count++;
             }
+            return new SuccessResult();
         }
 
-        public Color FindByID(int Id)
+        public IDataResult<Color> FindByID(int Id)
         {
             Color c = new Color();
             if (_colorDal.GetAll().Any(x => x.ID == Id))
@@ -62,7 +68,7 @@ namespace Business.Concrete
                 c = _colorDal.GetAll().FirstOrDefault(x => x.ID == Id);
             }
             else Console.WriteLine("No such color was found.");
-            return c;
+            return new SuccessDataResult<Color>(c);
         }
     }
 }

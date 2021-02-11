@@ -1,4 +1,6 @@
-﻿using Business.Abstract;
+using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -18,32 +20,35 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public void Add(Brand entity)
+        public IResult Add(Brand entity)
         {
             _brandDal.Add(entity);
+            return new SuccessResult("Brand" + Messages.AddSingular);
         }
 
-        public void Update(Brand entity)
+        public IResult Update(Brand entity)
         {
             _brandDal.Update(entity);
+            return new SuccessResult("Brand" + Messages.UpdateSingular);
         }
 
-        public void Delete(Brand entity)
+        public IResult Delete(Brand entity)
         {
             _brandDal.Delete(entity);
+            return new SuccessResult("Brand" + Messages.DeleteSingular);
         }
 
-        public Brand Get(Brand entity)
+        public IDataResult<Brand> Get(Brand entity)
         {
-            return _brandDal.Get(x => x.ID == entity.ID);
+            return new SuccessDataResult<Brand>(_brandDal.Get(x => x.ID == entity.ID));
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
         }
 
-        public void GetList(List<Brand> list)
+        public IResult GetList(List<Brand> list)
         {
             Console.WriteLine("\n------- Brand List -------");
             int count = 1;
@@ -52,9 +57,10 @@ namespace Business.Concrete
                 Console.WriteLine("{0}- ID: {1}\n   Brand Name: {2}", count, brand.ID, brand.Name);
                 count++;
             }
+            return new SuccessResult();
         }
 
-        public Brand FindByID(int Id)
+        public IDataResult<Brand> FindByID(int Id)
         {
             Brand b = new Brand();
             if (_brandDal.GetAll().Any(x => x.ID == Id))
@@ -62,7 +68,8 @@ namespace Business.Concrete
                 b = _brandDal.GetAll().FirstOrDefault(x => x.ID == Id);
             }
             else Console.WriteLine("No such brand was found.");
-            return b;
+            return new SuccessDataResult<Brand>(b);
         }
+
     }
 }

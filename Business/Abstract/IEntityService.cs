@@ -1,4 +1,5 @@
-﻿using System;
+using Core.Utilities.Results;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,12 @@ namespace Business.Abstract
 {
     public interface IEntityService<T> where T: class
     {
-        List<T> GetAll();
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(T entity);
-        T Get(T entity);
-        void GetList(List<T> list);
-        T FindByID(int Id);
+        IDataResult<List<T>> GetAll();
+        IResult Add(T entity);
+        IResult Update(T entity);
+        IResult Delete(T entity);
+        IDataResult<T> Get(T entity);
+        IResult GetList(List<T> list);
+        IDataResult<T> FindByID(int Id);
     }
 }

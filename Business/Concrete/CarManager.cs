@@ -23,10 +23,6 @@ namespace Business.Concrete
 
         public IResult Add(Car entity)
         {
-            if (entity.Name.Length < 2)
-            {
-                return new ErrorResult(Messages.CarNameValidation);
-            }
             _carDal.Add(entity);
             return new SuccessResult("Car" + Messages.AddSingular);
         }
@@ -71,11 +67,10 @@ namespace Business.Concrete
         public IResult GetList(List<Car> list)
         {
             Console.WriteLine("\n------- Car List -------");
-            int count = 1;
+
             foreach (var car in list)
             {
-                Console.WriteLine("{0}- ID: {1}\n    Brand ID: {2}\n    Color ID: {3}\n    Name: {4}\n    Model Year: {5}\n    Daily Price: {6} TL\n    Description: {7}", count, car.ID, car.BrandID, car.ColorID, car.Name, car.ModelYear, car.DailyPrice, car.Description);
-                count++;
+                Console.WriteLine("{0}- Brand ID: {1}\n    Color ID: {2}\n    Name: {3}\n    Model Year: {4}\n    Daily Price: {5} TL\n    Description: {6}\n",car.ID, car.BrandID, car.ColorID, car.Name, car.ModelYear, car.DailyPrice, car.Description);
             }
             return new SuccessResult();
         }
@@ -90,7 +85,6 @@ namespace Business.Concrete
             else Console.WriteLine("No such car was found.");
             return new SuccessDataResult<Car>(c);
         }
-
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {

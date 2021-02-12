@@ -51,11 +51,9 @@ namespace Business.Concrete
         public IResult GetList(List<Brand> list)
         {
             Console.WriteLine("\n------- Brand List -------");
-            int count = 1;
             foreach (var brand in list)
             {
-                Console.WriteLine("{0}- ID: {1}\n   Brand Name: {2}", count, brand.ID, brand.Name);
-                count++;
+                Console.WriteLine("{0}- Brand Name: {1}", brand.ID, brand.Name);
             }
             return new SuccessResult();
         }

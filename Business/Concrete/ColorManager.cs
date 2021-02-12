@@ -51,11 +51,9 @@ namespace Business.Concrete
         public IResult GetList(List<Color> list)
         {
             Console.WriteLine("\n------- Color List -------");
-            int count = 1;
             foreach (var color in list)
             {
-                Console.WriteLine("{0}- ID: {1}\n   Color Name: {2}", count, color.ID, color.Name);
-                count++;
+                Console.WriteLine("{0}- Color Name: {1}", color.ID, color.Name);
             }
             return new SuccessResult();
         }

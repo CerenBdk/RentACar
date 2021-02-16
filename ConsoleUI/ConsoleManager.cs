@@ -82,7 +82,7 @@ namespace ConsoleUI
         {
             while (flag)
             {
-                Console.WriteLine("\n*************** Main Menu ***************");
+                Console.WriteLine("\n*************** Car Menu ***************");
                 Console.WriteLine("          1. Add new Car");
                 Console.WriteLine("          2. Delete a Car");
                 Console.WriteLine("          3. Update a Car");
@@ -168,7 +168,7 @@ namespace ConsoleUI
                     Console.WriteLine(Messages.NotExist + "color. Please select an Color ID from the list:");
                 }
             }
-            car.BrandID = colorId;
+            car.ColorID = colorId;
 
             var name = "";
             bool flag3 = true;
@@ -590,7 +590,7 @@ namespace ConsoleUI
                 Console.WriteLine("Email: ");
                 email = Console.ReadLine();
                 var list = _userManager.GetAll().Data;
-                if (!list.Any(x => x.Email == email))
+                if (list.Any(x => x.Email == email))
                 {
                     Console.WriteLine("This email address" + Messages.AlreadyExist);
 

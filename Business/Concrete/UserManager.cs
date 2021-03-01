@@ -1,8 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class UserManager:IUserService
+    public class UserManager : IUserService
     {
         IUserDal _userDal;
 
-        public UserManager (IUserDal userDal)
-	    {
+        public UserManager(IUserDal userDal)
+        {
             _userDal = userDal;
-	    }
+        }
 
         public IDataResult<List<User>> GetAll()
         {
@@ -52,7 +52,7 @@ namespace Business.Concrete
             Console.WriteLine("\n------- User List -------");
             foreach (var user in list)
             {
-                Console.WriteLine("{0}- First Name: {1}\n   Last Name: {2}\n   Email: {3}\n",user.ID, user.FirstName, user.LastName, user.Email);
+                Console.WriteLine("{0}- First Name: {1}\n   Last Name: {2}\n   Email: {3}\n", user.ID, user.FirstName, user.LastName, user.Email);
             }
             return new SuccessResult();
         }
@@ -66,6 +66,16 @@ namespace Business.Concrete
             }
             else Console.WriteLine(Messages.NotExist + "user");
             return new SuccessDataResult<User>(u);
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
+        }
+
+        public IDataResult<User> GetByMail(string email)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
         }
     }
 }

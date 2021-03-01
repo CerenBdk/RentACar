@@ -1,0 +1,12 @@
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\bin\Debug\netstandard2.0\Entities.deps.json
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\bin\Debug\netstandard2.0\Entities.dll
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\bin\Debug\netstandard2.0\Entities.pdb
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\bin\Debug\netstandard2.0\Core.dll
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\bin\Debug\netstandard2.0\Core.pdb
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\obj\Debug\netstandard2.0\Entities.csprojAssemblyReference.cache
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\obj\Debug\netstandard2.0\Entities.AssemblyInfoInputs.cache
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\obj\Debug\netstandard2.0\Entities.AssemblyInfo.cs
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\obj\Debug\netstandard2.0\Entities.csproj.CoreCompileInputs.cache
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\obj\Debug\netstandard2.0\Entities.csproj.CopyComplete
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\obj\Debug\netstandard2.0\Entities.dll
+C:\Users\crnbd\Documents\Visual Studio 2019\RecapProject\RentACar\Entities\obj\Debug\netstandard2.0\Entities.pdb

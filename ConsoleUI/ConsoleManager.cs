@@ -1,5 +1,6 @@
 ﻿using Business.Concrete;
 using Business.Constants;
+using Core.Entities.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
@@ -76,7 +77,7 @@ namespace ConsoleUI
             }
         }
 
-       
+
         #region CarMenu
         public void CarMenu()
         {
@@ -424,7 +425,7 @@ namespace ConsoleUI
         private void GetBrandList()
         {
             _brandManager.GetList(_brandManager.GetAll().Data);
-        } 
+        }
         #endregion
 
         #region ColorMenu
@@ -529,7 +530,7 @@ namespace ConsoleUI
         private void GetColorList()
         {
             _colorManager.GetList(_colorManager.GetAll().Data);
-        }  
+        }
         #endregion
 
 
@@ -599,8 +600,8 @@ namespace ConsoleUI
             }
             user.Email = email;
 
-            Console.WriteLine("Password: ");
-            user.Password = Console.ReadLine();
+            //Console.WriteLine("Password: ");
+            //user.Password = Console.ReadLine();
 
             _userManager.Add(user);
             Console.WriteLine("User" + Messages.AddSingular);
@@ -667,8 +668,8 @@ namespace ConsoleUI
             }
             user.Email = email;
 
-            Console.WriteLine("Password: ");
-            user.Password = Console.ReadLine();
+            //Console.WriteLine("Password: ");
+            //user.Password = Console.ReadLine();
 
             _userManager.Update(user);
             Console.WriteLine("Color" + Messages.UpdateSingular);
@@ -678,7 +679,7 @@ namespace ConsoleUI
         {
             _userManager.GetList(_userManager.GetAll().Data);
         }
-        
+
         #endregion
         private void CustomerMenu()
         {
@@ -803,8 +804,8 @@ namespace ConsoleUI
             }
             user.Email = email;
 
-            Console.WriteLine("Password: ");
-            user.Password = Console.ReadLine();
+            //Console.WriteLine("Password: ");
+            //user.Password = Console.ReadLine();
 
             _userManager.Update(user);
             var customer = _customerManager.FindByID(choice).Data;
@@ -883,18 +884,18 @@ namespace ConsoleUI
             }
 
             bool flag3 = true;
-            string password = " ";
-            while (flag3)
-            {
-                Console.WriteLine("Please enter your password: ");
-                password = Console.ReadLine();
-                var selectUser = _userManager.GetAll().Data.Where(x => x.Email == email);
-                if (!selectUser.Any(x => x.Password == password))
-                {
-                    Console.WriteLine(Messages.NotExist + "user.");
-                }
-                else flag3 = false;
-            }
+            //string password = " ";
+            //while (flag3)
+            //{
+            //    Console.WriteLine("Please enter your password: ");
+            //    password = Console.ReadLine();
+            //    var selectUser = _userManager.GetAll().Data.Where(x => x.Email == email);
+            //    if (!selectUser.Any(x => x.Password == password))
+            //    {
+            //        Console.WriteLine(Messages.NotExist + "user.");
+            //    }
+            //    else flag3 = false;
+            //}
             Rental rent = new Rental();
             _carManager.GetList(_carManager.GetAll().Data.Where(x => x.IsRented == false).ToList());
             Console.WriteLine("Please select the CarID you want to rent: ");
@@ -902,7 +903,7 @@ namespace ConsoleUI
             var car = _carManager.FindByID(rent.CarID).Data;
             car.IsRented = true;
             _carManager.Update(car);
-            rent.CustomerID = _userManager.GetAll().Data.Where(x => x.Email == email && x.Password == password).Select(y => y.ID).FirstOrDefault();
+            //rent.CustomerID = _userManager.GetAll().Data.Where(x => x.Email == email && x.Password == password).Select(y => y.ID).FirstOrDefault();
             Console.WriteLine("Please enter the rent date: ");
             rent.RentDate = DateTime.Parse(Console.ReadLine());
 
@@ -944,17 +945,17 @@ namespace ConsoleUI
                 else flag3 = false;
             }
             bool flag4 = true;
-            string password = " ";
-            while (flag4)
-            {
-                Console.WriteLine("Please enter your password: ");
-                password = Console.ReadLine();
-                if (customer.Password != password)
-                {
-                    Console.WriteLine(Messages.NotExist + "user.");
-                }
-                else flag4 = false;
-            }
+            //string password = " ";
+            //while (flag4)
+            //{
+            //    Console.WriteLine("Please enter your password: ");
+            //    password = Console.ReadLine();
+            //    if (customer.Password != password)
+            //    {
+            //        Console.WriteLine(Messages.NotExist + "user.");
+            //    }
+            //    else flag4 = false;
+            //}
             var car = _carManager.FindByID(rent.CarID).Data;
             car.IsRented = false;
             _carManager.Update(car);
@@ -967,7 +968,7 @@ namespace ConsoleUI
         private void CarListForRent()
         {
             _carManager.GetList(_carManager.GetAll().Data.Where(x => x.IsRented == false).ToList());
-            
+
         }
 
         private void GetRentalDetail()

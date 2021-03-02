@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Business;
+using Core.Utilities.Helper;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -17,12 +18,12 @@ namespace Business.Concrete
     {
         ICarImageDal _carImageDal;
         ICarService _carService;
-        IFileService _fileService;
-        public CarImageManager(ICarImageDal carImageDal, ICarService carService, IFileService fileService)
+
+        private readonly string DefaultImage = Environment.CurrentDirectory + @"\wwwroot\Images\default.jpg";
+        public CarImageManager(ICarImageDal carImageDal, ICarService carService)
         {
             _carImageDal = carImageDal;
             _carService = carService;
-            _fileService = fileService;
         }
         public IResult Add(IFormFile image, CarImage img)
         {
@@ -34,7 +35,7 @@ namespace Business.Concrete
             {
                 return result;
             }
-            img.ImagePath = _fileService.Add(image);
+            img.ImagePath = FileOperationsHelper.Add(image);
             img.CreatedAt = DateTime.Now;            
             _carImageDal.Add(img);
             return new SuccessResult("Image" + Messages.AddSingular);
@@ -50,8 +51,8 @@ namespace Business.Concrete
             }
             var carImg = _carImageDal.Get(x => x.ID == img.ID);
             carImg.CreatedAt = DateTime.Now;
-            carImg.ImagePath = _fileService.Add(image);
-            _fileService.Delete(img.ImagePath);
+            carImg.ImagePath = FileOperationsHelper.Add(image);
+            FileOperationsHelper.Delete(img.ImagePath);
             _carImageDal.Update(carImg);
             return new SuccessResult("Image" + Messages.UpdateSingular);
         }
@@ -65,7 +66,7 @@ namespace Business.Concrete
             }
             
             _carImageDal.Delete(img);
-            _fileService.Delete(img.ImagePath);
+            FileOperationsHelper.Delete(img.ImagePath);
             return new SuccessResult("Image" + Messages.DeleteSingular);
         }
 
@@ -105,13 +106,15 @@ namespace Business.Concrete
         {
             if (!_carImageDal.GetAll().Any(x => x.CarID == carID))
             {
-                CarImage img = new CarImage
+                List<CarImage> img = new List<CarImage>
                 {
-                    CarID = carID,
-                    CreatedAt = DateTime.Now,
-                    ImagePath = @"\wwwroot\Images\default.jpeg"
+                    new CarImage
+                    {
+                        CarID = carID,
+                        ImagePath = DefaultImage
+                    }
                 };
-                _carImageDal.Add(img);
+                return new SuccessDataResult<List<CarImage>>(img);
             }
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(x => x.CarID == carID)); 
         }

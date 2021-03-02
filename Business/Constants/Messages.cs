@@ -25,11 +25,11 @@ namespace Business.Constants
         public static string ImageNumberLimitExceeded = "The image limit for this car is full and new images cannot be added.";
 
         public static string AuthorizationDenied = "Authorization Denied.";
-        internal static string AccessTokenCreated;
-        internal static string UserAlreadyExists;
-        internal static string SuccessfulLogin;
-        internal static User PasswordError;
-        internal static User UserNotFound;
-        internal static string UserRegistered;
+        public static string AccessTokenCreated = "Access Token has been created.";
+        public static string UserAlreadyExists = "User is already exists.";
+        public static string SuccessfulLogin = "Login successful.";
+        public static string PasswordError = "Incorrect password.";
+        public static string UserNotFound = "User was not found";
+        public static string UserRegistered = "User has been registered.";
     }
 }

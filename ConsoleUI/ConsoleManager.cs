@@ -116,7 +116,7 @@ namespace ConsoleUI
                         GetCarList();
                         break;
                     case '7':
-                        ViewCarDetailList();
+                        //ViewCarDetailList();
                         break;
                     case '8':
                         Dashboard();
@@ -311,15 +311,15 @@ namespace ConsoleUI
         }
 
 
-        private void ViewCarDetailList()
-        {
-            int counter = 1;
-            foreach (var car in _carManager.GetCarDetails().Data)
-            {
-                Console.WriteLine("{0}- Car Name: {1}\n    Brand Name: {2}\n    Color Name: {3}", counter, car.CarName, car.BrandName, car.ColorName);
-                counter++;
-            }
-        }
+        //private void ViewCarDetailList()
+        //{
+        //    int counter = 1;
+        //    foreach (var car in _carManager.GetCarDetails().Data)
+        //    {
+        //        Console.WriteLine("{0}- Car Name: {1}\n    Brand Name: {2}\n    Color Name: {3}", counter, car.CarName, car.BrandName, car.ColorName);
+        //        counter++;
+        //    }
+        //}
 
         #endregion
 

@@ -24,7 +24,7 @@ namespace Core.Utilities.Helper
             }
 
             string filePath = Path.Combine(path, fileName);
-            return filePath;
+            return fileName;
         }
 
         public static string CreateNewFileName(string fileName)

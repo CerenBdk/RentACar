@@ -100,9 +100,9 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(c);
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails(int id)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails().Where(x => x.CarID == id).ToList());
         }
 
         [TransactionScopeAspect]

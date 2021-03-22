@@ -29,7 +29,7 @@ namespace ConsoleUI
             _brandManager = new BrandManager(new EfBrandDal());
             _userManager = new UserManager(new EfUserDal());
             _customerManager = new CustomerManager(new EfCustomerDal());
-            _rentalManager = new RentalManager(new EfRentalDal());
+            //_rentalManager = new RentalManager(new EfRentalDal());
         }
 
         public void Dashboard()
@@ -64,7 +64,7 @@ namespace ConsoleUI
                         CustomerMenu();
                         break;
                     case '6':
-                        RentACarMenu();
+                        //RentACarMenu();
                         break;
                     case '7':
                         Console.WriteLine("*************** Have a nice day. Good Bye :) ***************");
@@ -825,162 +825,162 @@ namespace ConsoleUI
             }
         }
 
-        #region RentACarMenu
-        private void RentACarMenu()
-        {
-            while (flag)
-            {
-                Console.WriteLine("\n*************** Rental Menu ***************");
-                Console.WriteLine("          1. Rent a Car");
-                Console.WriteLine("          2. Return a Car");
-                Console.WriteLine("          3. View the Rental Detail List");
-                Console.WriteLine("          4. List of cars available for rent");
-                Console.WriteLine("          5. Go to Main Menu");
-                Console.WriteLine("          6. Exit \n");
+        //#region RentACarMenu
+        //private void RentACarMenu()
+        //{
+        //    while (flag)
+        //    {
+        //        Console.WriteLine("\n*************** Rental Menu ***************");
+        //        Console.WriteLine("          1. Rent a Car");
+        //        Console.WriteLine("          2. Return a Car");
+        //        Console.WriteLine("          3. View the Rental Detail List");
+        //        Console.WriteLine("          4. List of cars available for rent");
+        //        Console.WriteLine("          5. Go to Main Menu");
+        //        Console.WriteLine("          6. Exit \n");
 
-                char key = Console.ReadLine()[0];
-                switch (key)
-                {
-                    case '1':
-                        AddRental();
-                        break;
-                    case '2':
-                        UpdateRental();
-                        break;
-                    case '3':
-                        GetRentalDetail();
-                        break;
-                    case '4':
-                        CarListForRent();
-                        break;
-                    case '5':
-                        Dashboard();
-                        break;
-                    case '6':
-                        Console.WriteLine("*************** Have a nice day. Good Bye :) ***************");
-                        flag = false;
-                        break;
-                    default:
-                        Console.WriteLine("\nYou entered an incorrect value! Please try again.");
-                        break;
-                }
-            }
-        }
+        //        char key = Console.ReadLine()[0];
+        //        switch (key)
+        //        {
+        //            case '1':
+        //                AddRental();
+        //                break;
+        //            case '2':
+        //                UpdateRental();
+        //                break;
+        //            case '3':
+        //                GetRentalDetail();
+        //                break;
+        //            case '4':
+        //                CarListForRent();
+        //                break;
+        //            case '5':
+        //                Dashboard();
+        //                break;
+        //            case '6':
+        //                Console.WriteLine("*************** Have a nice day. Good Bye :) ***************");
+        //                flag = false;
+        //                break;
+        //            default:
+        //                Console.WriteLine("\nYou entered an incorrect value! Please try again.");
+        //                break;
+        //        }
+        //    }
+        //}
 
-        private void AddRental()
-        {
-            bool flag2 = true;
-            string email = " ";
-            while (flag2)
-            {
-                Console.WriteLine("Please enter your registered email address: ");
-                email = Console.ReadLine();
-                var list = _userManager.GetAll().Data;
-                if (!list.Any(x => x.Email == email))
-                {
-                    Console.WriteLine(Messages.NotExist + "email address.");
-                }
-                else flag2 = false;
-            }
+        //private void AddRental()
+        //{
+        //    bool flag2 = true;
+        //    string email = " ";
+        //    while (flag2)
+        //    {
+        //        Console.WriteLine("Please enter your registered email address: ");
+        //        email = Console.ReadLine();
+        //        var list = _userManager.GetAll().Data;
+        //        if (!list.Any(x => x.Email == email))
+        //        {
+        //            Console.WriteLine(Messages.NotExist + "email address.");
+        //        }
+        //        else flag2 = false;
+        //    }
 
-            bool flag3 = true;
-            //string password = " ";
-            //while (flag3)
-            //{
-            //    Console.WriteLine("Please enter your password: ");
-            //    password = Console.ReadLine();
-            //    var selectUser = _userManager.GetAll().Data.Where(x => x.Email == email);
-            //    if (!selectUser.Any(x => x.Password == password))
-            //    {
-            //        Console.WriteLine(Messages.NotExist + "user.");
-            //    }
-            //    else flag3 = false;
-            //}
-            Rental rent = new Rental();
-            _carManager.GetList(_carManager.GetAll().Data.Where(x => x.IsRented == false).ToList());
-            Console.WriteLine("Please select the CarID you want to rent: ");
-            rent.CarID = Convert.ToInt32(Console.ReadLine());
-            var car = _carManager.FindByID(rent.CarID).Data;
-            car.IsRented = true;
-            _carManager.Update(car);
-            //rent.CustomerID = _userManager.GetAll().Data.Where(x => x.Email == email && x.Password == password).Select(y => y.ID).FirstOrDefault();
-            Console.WriteLine("Please enter the rent date: ");
-            rent.RentDate = DateTime.Parse(Console.ReadLine());
+        //    bool flag3 = true;
+        //    //string password = " ";
+        //    //while (flag3)
+        //    //{
+        //    //    Console.WriteLine("Please enter your password: ");
+        //    //    password = Console.ReadLine();
+        //    //    var selectUser = _userManager.GetAll().Data.Where(x => x.Email == email);
+        //    //    if (!selectUser.Any(x => x.Password == password))
+        //    //    {
+        //    //        Console.WriteLine(Messages.NotExist + "user.");
+        //    //    }
+        //    //    else flag3 = false;
+        //    //}
+        //    Rental rent = new Rental();
+        //    _carManager.GetList(_carManager.GetAll().Data.Where(x => x.IsRented == false).ToList());
+        //    Console.WriteLine("Please select the CarID you want to rent: ");
+        //    rent.CarID = Convert.ToInt32(Console.ReadLine());
+        //    var car = _carManager.FindByID(rent.CarID).Data;
+        //    car.IsRented = true;
+        //    _carManager.Update(car);
+        //    //rent.CustomerID = _userManager.GetAll().Data.Where(x => x.Email == email && x.Password == password).Select(y => y.ID).FirstOrDefault();
+        //    Console.WriteLine("Please enter the rent date: ");
+        //    rent.RentDate = DateTime.Parse(Console.ReadLine());
 
-            _rentalManager.Add(rent);
-            Console.WriteLine(Messages.RentSuccess);
-        }
+        //    _rentalManager.Add(rent);
+        //    Console.WriteLine(Messages.RentSuccess);
+        //}
 
-        private void UpdateRental()
-        {
-            _rentalManager.GetList(_rentalManager.GetAll().Data);
+        //private void UpdateRental()
+        //{
+        //    _rentalManager.GetList(_rentalManager.GetAll().Data);
 
-            bool flag2 = true;
-            int choice = 0;
-            while (flag2)
-            {
-                Console.WriteLine("Please select the ID of your rental transaction record: ");
-                choice = Convert.ToInt32(Console.ReadLine());
-                var list = _rentalManager.GetAll().Data;
-                if (!list.Any(x => x.ID == choice))
-                {
-                    Console.WriteLine(Messages.NotExist + "rental transaction");
+        //    bool flag2 = true;
+        //    int choice = 0;
+        //    while (flag2)
+        //    {
+        //        Console.WriteLine("Please select the ID of your rental transaction record: ");
+        //        choice = Convert.ToInt32(Console.ReadLine());
+        //        var list = _rentalManager.GetAll().Data;
+        //        if (!list.Any(x => x.ID == choice))
+        //        {
+        //            Console.WriteLine(Messages.NotExist + "rental transaction");
 
-                }
-                else flag2 = false;
-            }
-            var rent = _rentalManager.FindByID(choice).Data;
-            bool flag3 = true;
-            string email = " ";
-            var customer = new User();
-            while (flag3)
-            {
-                Console.WriteLine("Please enter your registered email address: ");
-                email = Console.ReadLine();
-                customer = _userManager.FindByID(rent.CustomerID).Data;
-                if (customer.Email != email)
-                {
-                    Console.WriteLine(Messages.NotExist + "email address.");
-                }
-                else flag3 = false;
-            }
-            bool flag4 = true;
-            //string password = " ";
-            //while (flag4)
-            //{
-            //    Console.WriteLine("Please enter your password: ");
-            //    password = Console.ReadLine();
-            //    if (customer.Password != password)
-            //    {
-            //        Console.WriteLine(Messages.NotExist + "user.");
-            //    }
-            //    else flag4 = false;
-            //}
-            var car = _carManager.FindByID(rent.CarID).Data;
-            car.IsRented = false;
-            _carManager.Update(car);
-            Console.WriteLine("Please enter the rent date: ");
-            rent.ReturnDate = DateTime.Parse(Console.ReadLine());
-            _rentalManager.Update(rent);
-            Console.WriteLine(Messages.ReturnSuccess);
-        }
+        //        }
+        //        else flag2 = false;
+        //    }
+        //    var rent = _rentalManager.FindByID(choice).Data;
+        //    bool flag3 = true;
+        //    string email = " ";
+        //    var customer = new User();
+        //    while (flag3)
+        //    {
+        //        Console.WriteLine("Please enter your registered email address: ");
+        //        email = Console.ReadLine();
+        //        customer = _userManager.FindByID(rent.CustomerID).Data;
+        //        if (customer.Email != email)
+        //        {
+        //            Console.WriteLine(Messages.NotExist + "email address.");
+        //        }
+        //        else flag3 = false;
+        //    }
+        //    bool flag4 = true;
+        //    //string password = " ";
+        //    //while (flag4)
+        //    //{
+        //    //    Console.WriteLine("Please enter your password: ");
+        //    //    password = Console.ReadLine();
+        //    //    if (customer.Password != password)
+        //    //    {
+        //    //        Console.WriteLine(Messages.NotExist + "user.");
+        //    //    }
+        //    //    else flag4 = false;
+        //    //}
+        //    var car = _carManager.FindByID(rent.CarID).Data;
+        //    car.IsRented = false;
+        //    _carManager.Update(car);
+        //    Console.WriteLine("Please enter the rent date: ");
+        //    rent.ReturnDate = DateTime.Parse(Console.ReadLine());
+        //    _rentalManager.Update(rent);
+        //    Console.WriteLine(Messages.ReturnSuccess);
+        //}
 
-        private void CarListForRent()
-        {
-            _carManager.GetList(_carManager.GetAll().Data.Where(x => x.IsRented == false).ToList());
+        //private void CarListForRent()
+        //{
+        //    _carManager.GetList(_carManager.GetAll().Data.Where(x => x.IsRented == false).ToList());
 
-        }
+        //}
 
-        private void GetRentalDetail()
-        {
-            int counter = 1;
-            foreach (var rent in _rentalManager.GetRentalDetails().Data)
-            {
-                Console.WriteLine("{0}- Car Name: {1}\n    Customer Name: {2}\n    Rent Date: {3}\n    Return Date: {4}\n", rent.RentalID, rent.CarName, rent.CustomerName, rent.RentDate, rent.ReturnDate);
-                counter++;
-            }
-        }
+        //private void GetRentalDetail()
+        //{
+        //    int counter = 1;
+        //    foreach (var rent in _rentalManager.GetRentalDetails().Data)
+        //    {
+        //        Console.WriteLine("{0}- Car Name: {1}\n    Customer Name: {2}\n    Rent Date: {3}\n    Return Date: {4}\n", rent.RentalID, rent.CarName, rent.CustomerName, rent.RentDate, rent.ReturnDate);
+        //        counter++;
+        //    }
+        //}
 
-        #endregion
+        //#endregion
     }
 }

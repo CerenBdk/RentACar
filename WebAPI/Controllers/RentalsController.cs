@@ -9,8 +9,8 @@ using Entities.Concrete;
 
 namespace WebAPI.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Rentals")]
+    [Route("api/[controller]")]
+    [ApiController]
     public class RentalsController : ControllerBase
     {
         IRentalService _rentalService;
@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromBody] Rental rental)
+        public IActionResult Add(Rental rental)
         {
             var result = _rentalService.Add(rental);
             if (result.Success)

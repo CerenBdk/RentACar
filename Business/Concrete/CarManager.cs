@@ -105,6 +105,17 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails().Where(x => x.CarID == id).ToList());
         }
 
+        public IDataResult<List<CarDetailDto>> GetAllCarDetails()
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+        }
+
+        public IDataResult<List<CarDetailDto>> GetAllCarDetailsByFilter(int brandId, int colorId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails().Where(x => x.BrandID == brandId && x.ColorID == colorId).ToList());
+        }
+
+
         [TransactionScopeAspect]
         public IResult AddTransactionalTest(Car car)
         {

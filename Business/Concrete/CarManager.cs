@@ -29,7 +29,7 @@ namespace Business.Concrete
             _carDal = carDal; 
         }
 
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car entity)
@@ -38,6 +38,7 @@ namespace Business.Concrete
             return new SuccessResult("Car" + Messages.AddSingular);
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car entity)
         {
@@ -56,15 +57,15 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(x => x.ID == entity.ID));
         }
 
-        public IDataResult<List<Car>> GetCarsByBrandID(int Id)
+        public IDataResult<List<CarDetailDto>> GetCarsByBrandID(int Id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(x => x.BrandID == Id));
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails().Where(x => x.BrandID == Id).ToList());
         }
 
         [CacheAspect]
-        public IDataResult<List<Car>> GetCarsByColorID(int Id)
+        public IDataResult<List<CarDetailDto>> GetCarsByColorID(int Id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(x => x.ColorID == Id));
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails().Where(x => x.ColorID == Id).ToList());
         }
 
         [CacheAspect]

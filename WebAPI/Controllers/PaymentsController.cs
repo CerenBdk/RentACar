@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Payment payment)
+        public IActionResult Add([FromBody] Payment payment)
         {
             var result = _paymentService.Add(payment);
             if (result.Success)

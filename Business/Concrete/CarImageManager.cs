@@ -19,7 +19,7 @@ namespace Business.Concrete
         ICarImageDal _carImageDal;
         ICarService _carService;
 
-        private readonly string DefaultImage = "default.jpg";
+        private readonly string DefaultImage = "default.jpeg";
         public CarImageManager(ICarImageDal carImageDal, ICarService carService)
         {
             _carImageDal = carImageDal;

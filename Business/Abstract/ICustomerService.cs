@@ -12,5 +12,6 @@ namespace Business.Abstract
     public interface ICustomerService:IEntityService<Customer>
     {
         IDataResult<List<CustomerDetailDto>> GetCustomerDetails();
+        IDataResult<CustomerDetailDto> GetCustomerDetailByMail(string mail);
     }
 }

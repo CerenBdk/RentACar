@@ -42,9 +42,20 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete([FromBody] CreditCard card)
+        public IActionResult Delete(CreditCard card)
         {
             var result = _creditCardService.Delete(card);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("deletebycardid")]
+        public IActionResult DeleteByCardId([FromBody]int cardId)
+        {
+            var result = _creditCardService.DeleteById(cardId);
             if (result.Success)
             {
                 return Ok(result);
@@ -79,6 +90,18 @@ namespace WebAPI.Controllers
         public IActionResult GetById(int cardId)
         {
             var result = _creditCardService.FindByID(cardId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getallcreditcardbycustomerid")]
+
+        public IActionResult GetAllCreditCardByCustomerId(int customerId)
+        {
+            var result = _creditCardService.GetAllCreditCardByCustomerId(customerId);
             if (result.Success)
             {
                 return Ok(result);

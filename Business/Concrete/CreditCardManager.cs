@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,9 +23,15 @@ namespace Business.Concrete
 
         public IResult Add(CreditCard entity)
         {
+            IResult result = BusinessRules.Run(CheckIfCardIsExists(entity.CreditCardNumber));
+            if (result != null)
+            {
+                return result;
+            }
             _creditCardDal.Add(entity);
             return new SuccessResult("Credit Card" + Messages.AddSingular);
         }
+
 
         public IResult Delete(CreditCard entity)
         {
@@ -32,14 +39,21 @@ namespace Business.Concrete
             return new SuccessResult("Credit Card" + Messages.DeleteSingular);
         }
 
+        public IResult DeleteById(int cardId)
+        {
+            var card = _creditCardDal.Get(x => x.ID == cardId);
+            _creditCardDal.Delete(card);
+            return new SuccessResult("Credit Card" + Messages.DeleteSingular);
+        }
+
         public IDataResult<CreditCard> FindByID(int Id)
         {
             CreditCard p = new CreditCard();
-            if (_creditCardDal.GetAll().Any(x => x.ID == Id))
+            if (!_creditCardDal.GetAll().Any(x => x.ID == Id))
             {
-                p = _creditCardDal.GetAll().FirstOrDefault(x => x.ID == Id);
+                return new ErrorDataResult<CreditCard>(Messages.NotExist + "credit card");
             }
-            else Console.WriteLine(Messages.NotExist + "credit card");
+            p = _creditCardDal.GetAll().FirstOrDefault(x => x.ID == Id);
             return new SuccessDataResult<CreditCard>(p);
         }
 
@@ -53,6 +67,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CreditCard>>(_creditCardDal.GetAll());
         }
 
+        public IDataResult<List<CreditCard>> GetAllCreditCardByCustomerId(int customerId)
+        {
+            return new SuccessDataResult<List<CreditCard>>(_creditCardDal.GetAll().Where(x => x.CustomerID == customerId).ToList());
+        }
+
         public IResult GetList(List<CreditCard> list)
         {
             throw new NotImplementedException();
@@ -62,6 +81,15 @@ namespace Business.Concrete
         {
             _creditCardDal.Update(entity);
             return new SuccessResult("Credit Card" + Messages.UpdateSingular);
+        }
+
+        private IResult CheckIfCardIsExists(string creditCardNumber)
+        {
+            if (_creditCardDal.GetAll().Any(x => x.CreditCardNumber == creditCardNumber))
+            {
+                return new ErrorResult(Messages.AlreadyExist + "credit card.");
+            }
+            return new SuccessResult();
         }
 
     }

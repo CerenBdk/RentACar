@@ -2,7 +2,9 @@
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
+using Core.Utilities.Security.Hashing;
 using DataAccess.Abstract;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,12 @@ namespace Business.Concrete
     public class UserManager : IUserService
     {
         IUserDal _userDal;
+        ICustomerService _customerService;
 
-        public UserManager(IUserDal userDal)
+        public UserManager(IUserDal userDal, ICustomerService customerService)
         {
             _userDal = userDal;
+            _customerService = customerService;
         }
 
         public IDataResult<List<User>> GetAll()
@@ -33,6 +37,32 @@ namespace Business.Concrete
         public IResult Update(User entity)
         {
             _userDal.Update(entity);
+            return new SuccessResult("User" + Messages.UpdateSingular);
+        }
+
+        public IResult UpdateUserDto(UserForRegisterDto user, int userId)
+        {
+            var u = _userDal.GetAll().Where(x => x.ID == userId).FirstOrDefault();
+            if (user.FirstName != null && user.FirstName != "" && user.FirstName != " ")
+            {
+                u.FirstName = user.FirstName;
+            }
+            if (user.LastName != null && user.LastName != "" && user.LastName != " ")
+            {
+                u.LastName = user.LastName;
+            }
+            if (user.Email != null && user.Email != "" && user.Email != " ")
+            {
+                u.Email = user.Email;
+            }
+            if (user.Password != null && user.Password != "" && user.Password != " ")
+            {
+                byte[] passwordHash, passwordSalt;
+                HashingHelper.CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
+                u.PasswordHash = passwordHash;
+                u.PasswordSalt = passwordSalt;
+            }
+            _userDal.Update(u);
             return new SuccessResult("User" + Messages.UpdateSingular);
         }
 
@@ -73,9 +103,23 @@ namespace Business.Concrete
             return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
         }
 
+        public IDataResult<List<string>> GetUserClaims(int userId)
+        {
+            var user = _userDal.GetAll().Where(x => x.ID == userId).FirstOrDefault();
+            return new SuccessDataResult<List<string>>(_userDal.GetClaims(user).Select(x => x.Name).ToList());
+        }
         public IDataResult<User> GetByMail(string email)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+            return new SuccessDataResult<User>(_userDal.GetAll().Where(u => u.Email == email).FirstOrDefault());
+        }
+
+        public IResult CheckIfCustomer(int userId)
+        {
+            if (!_customerService.GetAll().Data.Any(x => x.UserID == userId))
+            {
+                return new ErrorResult();               
+            }
+            return new SuccessResult();
         }
     }
 }

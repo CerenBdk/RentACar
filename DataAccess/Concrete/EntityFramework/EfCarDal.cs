@@ -33,7 +33,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  IsRented = c.IsRented, 
                                  ModelYear = c.ModelYear,
                                  BrandID = b.ID,
-                                 ColorID = co.ID
+                                 ColorID = co.ID,
+                                 MinFindeks =c.MinFindeks
                              };
                 return result.ToList();
             }

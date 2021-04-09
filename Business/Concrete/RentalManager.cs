@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -17,11 +18,14 @@ namespace Business.Concrete
     {
         IRentalDal _rentalDal;
         ICarService _carService;
-      
-        public RentalManager(IRentalDal rentalDal, ICarService carService)
+        ICustomerService _customerService;
+
+
+        public RentalManager(IRentalDal rentalDal, ICarService carService, ICustomerService customerService)
         {
             _rentalDal = rentalDal;
             _carService = carService;
+            _customerService = customerService;
         }
 
         public IDataResult<List<Rental>> GetAll()
@@ -78,6 +82,17 @@ namespace Business.Concrete
         public IDataResult<List<RentalDetailDto>> GetRentalDetails()
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
+        }
+
+        public IResult CheckIfFindeks(int carId, int customerId)
+        {
+            var customer = _customerService.FindByID(customerId).Data;
+            var car = _carService.FindByID(carId).Data;
+            if (customer.Findeks <= car.MinFindeks)
+            {
+                return new ErrorResult(Messages.NotEngouhFindeks);
+            }
+            return new SuccessResult();
         }
     }
 }

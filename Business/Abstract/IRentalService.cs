@@ -12,5 +12,6 @@ namespace Business.Abstract
     public interface IRentalService:IEntityService<Rental>
     {
         IDataResult<List<RentalDetailDto>> GetRentalDetails();
+        IResult CheckIfFindeks(int carId, int customerId);
     }
 }

@@ -1,5 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.Entities.Concrete;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -26,12 +30,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
         }
 
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult Add(Customer entity)
         {
             _customerDal.Add(entity);
             return new SuccessResult("Customer" + Messages.AddSingular);
         }
 
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult Update(Customer entity)
         {
             _customerDal.Update(entity);
@@ -76,5 +82,11 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails());
         }
+
+        public IDataResult<CustomerDetailDto> GetCustomerDetailByMail(string mail)
+        {
+            return new SuccessDataResult<CustomerDetailDto>(_customerDal.GetCustomerDetails().Where(x => x.Email == mail).FirstOrDefault());
+        }
+
     }
 }

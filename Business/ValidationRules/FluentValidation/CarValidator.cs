@@ -18,6 +18,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(x => x.DailyPrice).GreaterThan(0);
             RuleFor(x => x.ModelYear).NotEmpty();
             RuleFor(x => x.DailyPrice).NotEmpty();
+            RuleFor(x => x.MinFindeks).InclusiveBetween(0, 1900);
         }
     }
 }

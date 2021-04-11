@@ -8,6 +8,7 @@ FluentValidation is the Validation Tool used for the verification process.
 
 ## Packageces
 | -- | -- |
+| ------------- | ------------- |
 | Visual Studio 2019
 | Asp.Net Core 3.1 | .Net Framework 4.5 |
 | Microsoft.EntityFrameworkCore.SqlServer 3.1.0 | Microsoft.EntityFrameworkCore 3.1.0 |

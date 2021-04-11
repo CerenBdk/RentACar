@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinesAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -19,19 +20,20 @@ namespace Business.Concrete
         {
             _brandDal = brandDal;
         }
-      
+
+        [SecuredOperation("admin")]
         public IResult Add(Brand entity)
         {
             _brandDal.Add(entity);
             return new SuccessResult("Brand" + Messages.AddSingular);
         }
-
+        [SecuredOperation("admin")]
         public IResult Update(Brand entity)
         {
             _brandDal.Update(entity);
             return new SuccessResult("Brand" + Messages.UpdateSingular);
         }
-
+        [SecuredOperation("admin")]
         public IResult Delete(Brand entity)
         {
             _brandDal.Delete(entity);

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinesAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -19,19 +20,19 @@ namespace Business.Concrete
         {
             _colorDal = colorDal;
         }
-
+        [SecuredOperation("admin")]
         public IResult Add(Color entity)
         {
             _colorDal.Add(entity);
             return new SuccessResult("Color" + Messages.AddSingular);
         }
-
+        [SecuredOperation("admin")]
         public IResult Update(Color entity)
         {
             _colorDal.Update(entity);
             return new SuccessResult("Color" + Messages.UpdateSingular);
         }
-
+        [SecuredOperation("admin")]
         public IResult Delete(Color entity)
         {
             _colorDal.Delete(entity);

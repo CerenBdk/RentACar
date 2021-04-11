@@ -38,6 +38,7 @@ namespace Business.Concrete
             return new SuccessResult("Car" + Messages.AddSingular);
         }
 
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car entity)
@@ -46,6 +47,7 @@ namespace Business.Concrete
             return new SuccessResult("Car" + Messages.UpdateSingular);
         }
 
+        [SecuredOperation("admin")]
         public IResult Delete(Car entity)
         {
             _carDal.Delete(entity);

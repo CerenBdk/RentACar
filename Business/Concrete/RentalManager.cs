@@ -88,7 +88,7 @@ namespace Business.Concrete
         {
             var customer = _customerService.FindByID(customerId).Data;
             var car = _carService.FindByID(carId).Data;
-            if (customer.Findeks <= car.MinFindeks)
+            if (customer.Findeks < car.MinFindeks)
             {
                 return new ErrorResult(Messages.NotEngouhFindeks);
             }

@@ -19,7 +19,7 @@ namespace Entities.DTOs
         public decimal DailyPrice { get; set; }
         public string Description { get; set; }
         public bool IsRented { get; set; }
-
         public int MinFindeks { get; set; }
+        public string Thumbnail { get; set; }
     }
 }

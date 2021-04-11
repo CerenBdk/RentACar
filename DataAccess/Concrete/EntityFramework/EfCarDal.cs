@@ -34,7 +34,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  ModelYear = c.ModelYear,
                                  BrandID = b.ID,
                                  ColorID = co.ID,
-                                 MinFindeks =c.MinFindeks
+                                 MinFindeks =c.MinFindeks,
+                                 Thumbnail = c.Thumbnail
                              };
                 return result.ToList();
             }

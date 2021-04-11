@@ -19,5 +19,6 @@ namespace Entities.Concrete
         public string Description { get; set; }
         public int MinFindeks { get; set; }
         public bool IsRented { get; set; }
+        public string Thumbnail { get; set; }
     }
 }

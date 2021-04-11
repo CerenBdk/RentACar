@@ -92,7 +92,7 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.NotEngouhFindeks);
             }
-            return new SuccessResult();
+            return new SuccessResult(Messages.EngouhFindeks);
         }
     }
 }

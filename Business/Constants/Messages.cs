@@ -32,5 +32,6 @@ namespace Business.Constants
         public static string UserNotFound = "User was not found";
         public static string UserRegistered = "User has been registered.";
         public static string NotEngouhFindeks = "Your Findeks points are not enough to rent this car.";
+        public static string EngouhFindeks = "Your Findeks points are enough to rent this car";
     }
 }

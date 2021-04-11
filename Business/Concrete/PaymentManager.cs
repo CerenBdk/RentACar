@@ -81,13 +81,16 @@ namespace Business.Concrete
 
         private IResult CheckIsCreditCardExist(string cardNumber, string expirationDate, string securityCode)
         {
-            if (!_creditCardService.GetAll().Data.Any(
-                x => x.CreditCardNumber == cardNumber && 
-                x.ExpirationDate == expirationDate &&
-                x.SecurityCode == securityCode
-                ))
+            if (_creditCardService.GetAll().Data.Any(x => x.CreditCardNumber == cardNumber))
             {
-                return new ErrorResult(Messages.NotExist + "credit card");
+                if (!_creditCardService.GetAll().Data.Any(
+                    x => x.CreditCardNumber == cardNumber &&
+                    x.ExpirationDate == expirationDate &&
+                    x.SecurityCode == securityCode
+                    ))
+                {
+                    return new ErrorResult(Messages.NotExist + "credit card");
+                }
             }
             return new SuccessResult();
         }
